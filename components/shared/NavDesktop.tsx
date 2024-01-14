@@ -6,11 +6,11 @@ import Link from "next/link";
 
 function NavDesktop() {
   return (
-    <nav className="flex items-center gap-6 flex-row">
+    <nav className="flex items-center gap-3 lg:gap-6 flex-row">
       <SignedIn>
         <NavList />
         <ThemeToggler />
-        <div className="border border-red-500 rounded-full p-1 flex items-center justify-center">
+        <div className="border border-sky-400 rounded-full p-1 flex items-center justify-center">
           <UserButton afterSignOutUrl="/" />
         </div>
       </SignedIn>

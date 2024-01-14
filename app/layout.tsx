@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>
+        <body className="flex flex-col min-h-screen bg-white dark:bg-darkBlue">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

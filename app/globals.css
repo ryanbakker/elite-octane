@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -9,68 +9,133 @@
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
- 
+
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
- 
+
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
- 
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
- 
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
- 
+
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
- 
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
- 
+
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
- 
+
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
- 
+
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
- 
+
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
- 
+
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
- 
+
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
- 
+
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
- 
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
- 
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .wrapper {
+    @apply max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full;
+  }
+
+  .form-input {
+    @apply bg-slate-900 border-sky-950 focus-visible:border-sky-600 focus-visible:ring-transparent text-white placeholder:text-slate-400 !py-5 !px-4 !important;
+  }
+
+  .form-textarea {
+    @apply bg-slate-900 border-sky-950 focus-visible:border-sky-600 focus-visible:ring-transparent resize-none h-[300px] overflow-scroll text-white placeholder:text-slate-400 !p-4 !important;
+  }
+
+  .form-dropdown-container {
+    @apply dark:bg-slate-900 dark:border-sky-950 hover:dark:border-sky-600 transition-all !important;
+  }
+
+  .form-dropdown-trigger {
+    @apply dark:bg-slate-900 dark:border-sky-950 focus:ring-transparent focus:ring-sky-600 focus-visible:ring-sky-600 !py-5 !px-4 !important;
+  }
+
+  .form-dropdown-text {
+    @apply cursor-pointer !important;
+  }
+
+  .form-datepicker button:first-child {
+    @apply rounded-md py-[10px] focus:ring-transparent focus:ring-sky-600 focus-visible:ring-sky-600 focus-visible:ring-0 focus:border focus:border-sky-600 text-white !important;
+  }
+
+  .form-datepicker button svg {
+    @apply !text-slate-300 !important;
+  }
+
+  .form-datepicker div div {
+    @apply hover:dark:border-sky-600 transition-all !important;
+  }
+
+  .form-datepicker button table button {
+    @apply py-0 !important;
+  }
+
+  .form-uploader {
+    @apply dark:bg-slate-900 border dark:border-sky-950 hover:dark:border-sky-600 p-1.5 flex flex-col items-center justify-center text-center transition-all !important;
+  }
+
+  .page-heading {
+    @apply wrapper text-3xl font-semibold;
+  }
+
+  .page-heading span {
+    @apply relative;
+  }
+
+  .page-heading span::after {
+    @apply rounded-sm;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -5px;
+    height: 3px;
+    width: 15px;
+    background-color: white;
   }
 }

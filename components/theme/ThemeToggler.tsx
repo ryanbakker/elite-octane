@@ -20,16 +20,16 @@ export function ThemeToggler() {
         <Button
           variant="outline"
           size="icon"
-          className="rounded-md bg-transparent border border-white text-white"
+          className="rounded-md bg-transparent border border-sky-400 text-sky-400 hover:text-sky-400"
         >
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 hover:fill-sky-400" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 hover:fill-sky-400" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="border border-indigo-600 dark:bg-indigo-950"
+        className="border border-sky-400 dark:bg-sky-950"
       >
         <DropdownMenuItem
           onClick={() => setTheme("light")}
