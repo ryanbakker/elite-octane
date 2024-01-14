@@ -61,6 +61,25 @@ export type UpdateListingParams = {
   path: string;
 };
 
+export type GetAllListingsParams = {
+  query: string;
+  limit: number;
+  page: number;
+  body: string;
+  brand: string;
+  drivetrain: string;
+  fuel: string;
+  transmission: string;
+  listingType: string;
+};
+
+export type GetRelatedListingsByBrandParams = {
+  brandId: string;
+  listingId: string;
+  limit?: number;
+  page: number | string;
+};
+
 // ====== URL QUERY PARAMS
 export type UrlQueryParams = {
   params: string;

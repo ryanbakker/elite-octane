@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IListing } from "@/lib/database/models/listing.model";
 import { useRouter } from "next/navigation";
 import { listingDefaultValues } from "@/constants";
-import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { listingFormSchema } from "@/lib/validator";
 import {
@@ -31,10 +30,6 @@ import FuelDropdown from "./FuelDropdown";
 import DrivetrainDropdown from "./DrivetrainDropdown";
 import { FileUploader } from "./FileUploader";
 import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { CalendarDays } from "lucide-react";
-import { Calendar } from "../ui/calendar";
-import { cn } from "@/lib/utils";
 import { DatePicker } from "@tremor/react";
 import { useUploadThing } from "@/lib/uploadthing";
 

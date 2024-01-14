@@ -9,62 +9,54 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formatDateTime = (dateString: Date) => {
-  const dateTimeOptions: Intl.DateTimeFormatOptions = {
-    weekday: "short", // abbreviated weekday name (e.g., 'Mon')
-    month: "short", // abbreviated month name (e.g., 'Oct')
-    day: "numeric", // numeric day of the month (e.g., '25')
-    hour: "numeric", // numeric hour (e.g., '8')
-    minute: "numeric", // numeric minute (e.g., '30')
-    hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
-  };
+export function formatClosingTime(inputString: string): {
+  formattedTime: string;
+  formattedDate: string;
+} {
+  const inputDate = new Date(inputString);
 
-  const dateOptions: Intl.DateTimeFormatOptions = {
-    weekday: "short", // abbreviated weekday name (e.g., 'Mon')
-    month: "short", // abbreviated month name (e.g., 'Oct')
-    year: "numeric", // numeric year (e.g., '2023')
-    day: "numeric", // numeric day of the month (e.g., '25')
-  };
+  // Extracting time components
+  const hours = inputDate.getUTCHours();
+  const minutes = inputDate.getUTCMinutes();
+  const ampm = hours >= 12 ? "pm" : "am";
 
-  const timeOptions: Intl.DateTimeFormatOptions = {
-    hour: "numeric", // numeric hour (e.g., '8')
-    minute: "numeric", // numeric minute (e.g., '30')
-    hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
-  };
+  // Formatting time as "hh:mmampm"
+  const formattedTime = `${hours % 12 || 12}:${
+    minutes < 10 ? "0" : ""
+  }${minutes}${ampm}`;
 
-  const formattedDateTime: string = new Date(dateString).toLocaleString(
-    "en-US",
-    dateTimeOptions
-  );
+  // Extracting date components
+  const day = inputDate.getUTCDate();
+  const month = inputDate.getUTCMonth() + 1; // Months are zero-based
+  const year = inputDate.getUTCFullYear();
 
-  const formattedDate: string = new Date(dateString).toLocaleString(
-    "en-US",
-    dateOptions
-  );
+  // Formatting date as "dd/mm/yyyy"
+  const formattedDate = `${day}/${month}/${year}`;
 
-  const formattedTime: string = new Date(dateString).toLocaleString(
-    "en-US",
-    timeOptions
-  );
+  return { formattedTime, formattedDate };
+}
 
-  return {
-    dateTime: formattedDateTime,
-    dateOnly: formattedDate,
-    timeOnly: formattedTime,
-  };
-};
+export function formatYear(inputString: string): string {
+  const inputDate = new Date(inputString);
+
+  // Extracting year component
+  const year = inputDate.getFullYear();
+
+  // Formatting date as "yyyy"
+  const formattedYear = `${year}`;
+
+  return formattedYear;
+}
 
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 
-export const formatPrice = (price: string) => {
-  const amount = parseFloat(price);
-  const formattedPrice = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(amount);
+export function formatPrice(any: any): string {
+  return any.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
-  return formattedPrice;
-};
+export function formatOdometer(number: string): string {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 export function formUrlQuery({ params, key, value }: UrlQueryParams) {
   const currentUrl = qs.parse(params);
@@ -97,4 +89,37 @@ export function removeKeysFromQuery({
     },
     { skipNull: true }
   );
+}
+
+function padWithZero(num: number): string {
+  return num < 10 ? "0" + num : num.toString();
+}
+
+export function formatCreatedDate(dateString: string): string {
+  const postDate = new Date(dateString);
+  const now = new Date();
+  const timeDifference = now.getTime() - postDate.getTime();
+  const seconds = Math.floor(timeDifference / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (seconds < 60) {
+    return "just now";
+  } else if (minutes < 60) {
+    return `${minutes} mins ago`;
+  } else if (hours < 24) {
+    return `${hours} hrs ago`;
+  } else if (days < 3) {
+    return `${days} days ago`;
+  } else {
+    // Format date as dd/mm/yy
+    const formattedDate =
+      padWithZero(postDate.getDate()) +
+      "/" +
+      padWithZero(postDate.getMonth() + 1) +
+      "/" +
+      postDate.getFullYear().toString().slice(-2);
+    return formattedDate;
+  }
 }
