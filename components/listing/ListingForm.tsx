@@ -98,6 +98,7 @@ const ListingForm = ({
         const newListing = await createListing({
           listing: {
             ...values,
+            imageUrl: uploadedImageUrl,
             closingDateTime: utcDeadlineDate,
             year: utcBuildYear,
           },
@@ -126,6 +127,7 @@ const ListingForm = ({
           listing: {
             ...values,
             _id: listingId,
+            imageUrl: uploadedImageUrl,
             closingDateTime: utcDeadlineDate,
             year: utcBuildYear,
           },
