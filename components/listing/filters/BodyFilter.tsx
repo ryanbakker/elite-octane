@@ -7,26 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAllBodys } from "@/lib/database/actions/body.actions";
-import { IBody } from "@/lib/database/models/body.model";
+import { bodyStyleOptions } from "@/constants";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 function BodyFilter() {
-  const [bodyTypes, setBodyTypes] = useState<IBody[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const getBodyTypes = async () => {
-      const bodyTypeList = await getAllBodys();
-
-      bodyTypeList && setBodyTypes(bodyTypeList as IBody[]);
-    };
-
-    getBodyTypes();
-  }, []);
 
   const onSelectBodyType = (bodyType: string) => {
     let newUrl = "";
@@ -40,12 +27,16 @@ function BodyFilter() {
     } else {
       newUrl = removeKeysFromQuery({
         params: searchParams.toString(),
-        keysToRemove: ["bodyType"],
+        keysToRemove: ["body"],
       });
     }
 
     router.push(newUrl, { scroll: false });
   };
+
+  const sortedBodyTypes = bodyStyleOptions
+    .slice()
+    .sort((a, b) => a.label.localeCompare(b.label));
 
   return (
     <Select onValueChange={(value: string) => onSelectBodyType(value)}>
@@ -55,10 +46,10 @@ function BodyFilter() {
       <SelectContent className="form-dropdown-container">
         <SelectItem value="All">All</SelectItem>
 
-        {bodyTypes.map((body) => (
+        {sortedBodyTypes.map((body) => (
           <SelectItem
             value={body.label}
-            key={body._id}
+            key={body.id}
             className="form-dropdown-text"
           >
             {body.label}

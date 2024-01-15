@@ -7,26 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAllDrivetrains } from "@/lib/database/actions/drivetain.actions";
-import { IDrivetrain } from "@/lib/database/models/drivetrain.model";
+import { drivetrainOptions } from "@/constants";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const DrivetrainFilter = () => {
-  const [drivetrains, setDrivetrains] = useState<IDrivetrain[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const getDrivetrains = async () => {
-      const drivetrainList = await getAllDrivetrains();
-
-      drivetrainList && setDrivetrains(drivetrainList as IDrivetrain[]);
-    };
-
-    getDrivetrains();
-  }, []);
 
   const onSelectDrivetrain = (drivetrain: string) => {
     let newUrl = "";
@@ -47,6 +34,10 @@ const DrivetrainFilter = () => {
     router.push(newUrl, { scroll: false });
   };
 
+  const sortedDrivetrains = drivetrainOptions
+    .slice()
+    .sort((a, b) => a.label.localeCompare(b.label));
+
   return (
     <Select onValueChange={(value: string) => onSelectDrivetrain(value)}>
       <SelectTrigger className="form-dropdown-trigger">
@@ -55,10 +46,10 @@ const DrivetrainFilter = () => {
       <SelectContent className="form-dropdown-container">
         <SelectItem value="All">All</SelectItem>
 
-        {drivetrains.map((drivetrain) => (
+        {sortedDrivetrains.map((drivetrain) => (
           <SelectItem
             value={drivetrain.label}
-            key={drivetrain._id}
+            key={drivetrain.id}
             className="form-dropdown-text"
           >
             {drivetrain.label}

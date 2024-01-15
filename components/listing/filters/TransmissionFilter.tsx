@@ -7,29 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAllTransmissions } from "@/lib/database/actions/transmission.actions";
-import { ITransmission } from "@/lib/database/models/transmission.model";
+import { transmissionOptions } from "@/constants";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const TransmissionFilter = () => {
-  const [transmissionTypes, setTransmissionTypes] = useState<ITransmission[]>(
-    []
-  );
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const getTransmissionTypes = async () => {
-      const transmissionList = await getAllTransmissions();
-
-      transmissionList &&
-        setTransmissionTypes(transmissionList as ITransmission[]);
-    };
-
-    getTransmissionTypes();
-  }, []);
 
   const onSelectTransmission = (transmission: string) => {
     let newUrl = "";
@@ -50,6 +34,10 @@ const TransmissionFilter = () => {
     router.push(newUrl, { scroll: false });
   };
 
+  const sortedTransmissionTypes = transmissionOptions
+    .slice()
+    .sort((a, b) => a.label.localeCompare(b.label));
+
   return (
     <Select onValueChange={(value: string) => onSelectTransmission(value)}>
       <SelectTrigger className="form-dropdown-trigger">
@@ -58,10 +46,10 @@ const TransmissionFilter = () => {
       <SelectContent className="form-dropdown-container">
         <SelectItem value="All">All</SelectItem>
 
-        {transmissionTypes.map((transmission) => (
+        {sortedTransmissionTypes.map((transmission) => (
           <SelectItem
             value={transmission.label}
-            key={transmission._id}
+            key={transmission.id}
             className="form-dropdown-text"
           >
             {transmission.label}

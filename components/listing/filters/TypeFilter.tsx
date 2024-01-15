@@ -7,26 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAllTypes } from "@/lib/database/actions/types.actions";
-import { IListingType } from "@/lib/database/models/listingType.model";
+import { listingTypeOptions } from "@/constants";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const TypeFilter = () => {
-  const [listingTypes, setListingTypes] = useState<IListingType[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const getListingTypes = async () => {
-      const typeList = await getAllTypes();
-
-      typeList && setListingTypes(typeList as IListingType[]);
-    };
-
-    getListingTypes();
-  }, []);
 
   const onSelectType = (listingType: string) => {
     let newUrl = "";
@@ -47,6 +34,10 @@ const TypeFilter = () => {
     router.push(newUrl, { scroll: false });
   };
 
+  const sortedListingTypes = listingTypeOptions
+    .slice()
+    .sort((a, b) => a.label.localeCompare(b.label));
+
   return (
     <Select onValueChange={(value: string) => onSelectType(value)}>
       <SelectTrigger className="form-dropdown-trigger">
@@ -55,10 +46,10 @@ const TypeFilter = () => {
       <SelectContent className="form-dropdown-container">
         <SelectItem value="All">All</SelectItem>
 
-        {listingTypes.map((listingType) => (
+        {sortedListingTypes.map((listingType) => (
           <SelectItem
             value={listingType.label}
-            key={listingType._id}
+            key={listingType.id}
             className="form-dropdown-text"
           >
             {listingType.label}

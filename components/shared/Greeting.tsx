@@ -32,7 +32,7 @@ function Greeting({ userFirstName, userLastName }: GreetingProps) {
   }, []);
 
   return (
-    <div className="wrapper mt-10 mb-5">
+    <div className="max-w-7xl lg:mx-auto px-5 pt-5 md:px-10 xl:px-0 w-full mt-10">
       {userFirstName && userLastName ? (
         <p className="text-slate-400">
           {greeting} {userFirstName} {userLastName},

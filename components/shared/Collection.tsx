@@ -25,8 +25,8 @@ function Collection({
   return (
     <div className="wrapper mb-16">
       {data.length > 0 ? (
-        <div>
-          <ul>
+        <div className="flex flex-col items-center gap-10">
+          <ul className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
             {data.map((listing) => {
               const hasSaveLink = collectionType === "Listings_Posted";
               const saved = collectionType === "My_Watchlist";

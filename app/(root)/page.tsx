@@ -1,5 +1,6 @@
 import BodyFilter from "@/components/listing/filters/BodyFilter";
 import BrandFilter from "@/components/listing/filters/BrandFilter";
+import ClearButton from "@/components/listing/filters/ClearButton";
 import DrivetrainFilter from "@/components/listing/filters/DrivetrainFilter";
 import FuelFilter from "@/components/listing/filters/FuelFilter";
 import Search from "@/components/listing/filters/Search";
@@ -12,6 +13,7 @@ import { getAllListings } from "@/lib/database/actions/listing.actions";
 import { getUserById } from "@/lib/database/actions/user.actions";
 import { SearchParamProps } from "@/types";
 import { auth } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default async function Home({ searchParams }: SearchParamProps) {
   const { sessionClaims } = auth();
@@ -54,6 +56,9 @@ export default async function Home({ searchParams }: SearchParamProps) {
         />
 
         <div className="wrapper flex flex-col gap-2">
+          <div className="flex w-full justify-end">
+            <ClearButton />
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             <Search />
             <BrandFilter />

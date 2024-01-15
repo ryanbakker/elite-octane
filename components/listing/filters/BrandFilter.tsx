@@ -7,26 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAllBrands } from "@/lib/database/actions/brand.actions";
-import { IBrand } from "@/lib/database/models/brand.model";
+import { brandOptions } from "@/constants";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const BrandFilter = () => {
-  const [brands, setBrands] = useState<IBrand[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const getBrands = async () => {
-      const brandList = await getAllBrands();
-
-      brandList && setBrands(brandList as IBrand[]);
-    };
-
-    getBrands();
-  }, []);
 
   const onSelectBrand = (brand: string) => {
     let newUrl = "";
@@ -48,7 +35,7 @@ const BrandFilter = () => {
   };
 
   // Sort brands alphabetically by label
-  const sortedBrands = brands
+  const sortedBrands = brandOptions
     .slice()
     .sort((a, b) => a.label.localeCompare(b.label));
 
@@ -63,7 +50,7 @@ const BrandFilter = () => {
         {sortedBrands.map((brand) => (
           <SelectItem
             value={brand.label}
-            key={brand._id}
+            key={brand.id}
             className="form-dropdown-text"
           >
             {brand.label}
