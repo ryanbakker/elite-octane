@@ -5,7 +5,7 @@ import React from "react";
 
 function ListingDetailsLists({ listing }: { listing: IListing }) {
   return (
-    <div className="flex flex-row gap-3 pt-2 pr-12">
+    <div className="flex flex-row gap-3 pt-6 pr-12">
       <ul className="listing-details-list">
         <li className="listing-details-list-item">
           <div className="listing-details-list-item-icon">

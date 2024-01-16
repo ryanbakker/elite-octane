@@ -1,4 +1,5 @@
 import ListingDetailsLists from "@/components/listing/ListingDetails";
+import SaveListing from "@/components/listing/SaveListing";
 import Collection from "@/components/shared/Collection";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +31,7 @@ async function ListingDetails({
     page: searchParams.page as string,
   });
 
-  console.log(listing);
+  const listingClosed = new Date(listing.closingDateTime) < new Date();
 
   return (
     <>
@@ -59,15 +60,21 @@ async function ListingDetails({
                 </div>
               </div>
 
-              {isCreator && (
-                <div>
-                  <Button asChild>
+              <div className="flex flex-row gap-5">
+                {isCreator && (
+                  <Button asChild size="lg">
                     <Link href={`/listings/${listing._id}/update`}>
                       Edit Listing
                     </Link>
                   </Button>
-                </div>
-              )}
+                )}
+
+                {listingClosed ? (
+                  <p>Listing has Closed</p>
+                ) : (
+                  <SaveListing listing={listing} userId={userId} />
+                )}
+              </div>
 
               <ListingDetailsLists listing={listing} />
             </div>
@@ -76,8 +83,8 @@ async function ListingDetails({
                 src={listing.imageUrl}
                 alt={listing.title}
                 width={600}
-                height={600}
-                className="rounded-md w-full object-cover aspect-square"
+                height={650}
+                className="rounded-md w-full object-cover"
               />
             </div>
           </div>

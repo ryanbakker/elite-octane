@@ -73,6 +73,12 @@ export type GetAllListingsParams = {
   listingType: string;
 };
 
+export type GetListingsByUserParams = {
+  userId: string;
+  limit?: number;
+  page: number;
+};
+
 export type GetRelatedListingsByBrandParams = {
   brandId: string;
   listingId: string;
@@ -95,4 +101,23 @@ export type RemoveUrlQueryParams = {
 export type SearchParamProps = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
+};
+
+// Save / Watchlist Params
+
+export type CreateSaveParams = {
+  listingId: string;
+  saverId: string;
+  createdAt: Date;
+};
+
+export type GetSavesByListingParams = {
+  listingId: string;
+  searchString: string;
+};
+
+export type GetSavesByUserParams = {
+  userId: string | null;
+  limit?: number;
+  page: string | number | null;
 };

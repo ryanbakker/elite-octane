@@ -51,8 +51,8 @@ export default async function Home({ searchParams }: SearchParamProps) {
 
       <section id="listings">
         <Greeting
-          userFirstName={currentUser.firstName}
-          userLastName={currentUser.lastName}
+          userFirstName={currentUser?.firstName}
+          userLastName={currentUser?.lastName}
         />
 
         <div className="wrapper flex flex-col gap-2">

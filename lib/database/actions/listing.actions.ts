@@ -3,6 +3,7 @@
 import {
   CreateListingParams,
   GetAllListingsParams,
+  GetListingsByUserParams,
   GetRelatedListingsByBrandParams,
   UpdateListingParams,
 } from "@/types";
@@ -213,6 +214,34 @@ export async function getAllListings({
       .limit(limit);
 
     const listings = await populateListing(listingsQuery);
+    const listingsCount = await Listing.countDocuments(conditions);
+
+    return {
+      data: JSON.parse(JSON.stringify(listings)),
+      totalPages: Math.ceil(listingsCount / limit),
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getListingsByUser({
+  userId,
+  limit = 6,
+  page,
+}: GetListingsByUserParams) {
+  try {
+    await connectToDatabase();
+
+    const conditions = { creator: userId };
+    const skipAmount = (page - 1) * limit;
+
+    const lisitngsQuery = Listing.find(conditions)
+      .sort({ createdAt: "desc" })
+      .skip(skipAmount)
+      .limit(limit);
+
+    const listings = await populateListing(lisitngsQuery);
     const listingsCount = await Listing.countDocuments(conditions);
 
     return {

@@ -1,6 +1,6 @@
 import ListingForm from "@/components/listing/ListingForm";
-import { Kanit } from "next/font/google";
 import { auth } from "@clerk/nextjs";
+import { Kanit } from "next/font/google";
 
 const kanit = Kanit({ subsets: ["latin"], weight: ["600"] });
 

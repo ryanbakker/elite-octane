@@ -6,7 +6,7 @@ import {
   formatYear,
 } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
-import { FileEdit, MapPin, Timer } from "lucide-react";
+import { ArrowRight, FileEdit, MapPin, MoveRight, Timer } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Kanit } from "next/font/google";
@@ -37,7 +37,7 @@ function Card({ listing, hasSaveLink, saved }: CardProps) {
       <div className="flex min-h-[200px] flex-col gap-3 p-4 justify-between">
         <div className="flex flex-col gap-0.5">
           <h4
-            className={`${kanit.className} text-3xl line-clamp-1 text-slate-50`}
+            className={`${kanit.className} text-2xl md:text-3xl line-clamp-1 text-slate-50`}
           >
             {listing.title}
           </h4>
@@ -77,6 +77,17 @@ function Card({ listing, hasSaveLink, saved }: CardProps) {
             {formatCreatedDate(listing.createdAt.toString())}
           </p>
         </div>
+        {hasSaveLink ? (
+          ""
+        ) : (
+          <Link
+            href={`/saves?listingId=${listing._id}`}
+            className="flex flex-row gap-2"
+          >
+            <p>Save Details</p>
+            <MoveRight />
+          </Link>
+        )}
       </div>
     </Link>
   );

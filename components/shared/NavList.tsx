@@ -8,7 +8,7 @@ function NavList() {
   const pathname = usePathname();
 
   return (
-    <ul className="flex flex-row gap-2 lg:gap-5 items-center">
+    <ul className="flex flex-row gap-2 items-center">
       {navLinks.map((link) => {
         const isActive = pathname === link.route;
 
